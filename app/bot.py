@@ -1,4 +1,6 @@
 from aiogram import Bot, types, Dispatcher
+from aiogram.dispatcher import FSMContext
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from app.keyboards import inline_kb, keyboard
 from app.dialogs import MESSAGES, input_field_text, text_get_coords, text_planet_data, planets_eng_rus
 from config import TOKEN, API_URL
@@ -8,9 +10,9 @@ import json
 
 
 bot = Bot(token=TOKEN)
-dp = Dispatcher(bot)
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
 logging.basicConfig(level=logging.INFO)
-location = None
 
 
 @dp.message_handler(commands=['start'])
@@ -29,17 +31,20 @@ async def process_coords_command(message: types.Message):
 
 
 @dp.message_handler(content_types=["location"])
-async def process_get_location(message: types.Message):
-    global location
+async def process_get_location(message: types.Message, state: FSMContext):
     location = message.location
+    async with state.proxy() as data:
+        data['location'] = location
     await message.answer(input_field_text, reply_markup=inline_kb)
 
 
 @dp.callback_query_handler(lambda c: c.data)
-async def send_planet_coords(callback_query: types.CallbackQuery):
+async def send_planet_coords(callback_query: types.CallbackQuery, state: FSMContext):
     planet_tuple = planets_eng_rus[callback_query.data]
     planet_name_rus = planet_tuple[0]
     planet_num = planet_tuple[1]
+    async with state.proxy() as data:
+        location = data['location']
     if location is not None:
         latitude = location.latitude
         longitude = location.longitude
