@@ -7,7 +7,7 @@ Creative Commons Corporation ("Creative Commons") is not a law firm and does not
 Using Creative Commons Public Licenses
 
 Creative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.
-
+```
  Considerations for licensors: Our public licenses are
  intended for use by those authorized to give the public
  permission to use material in ways otherwise restricted by
@@ -21,7 +21,8 @@ Creative Commons public licenses provide a standard set of terms and conditions 
  licensed material, or material used under an exception or
  limitation to copyright. More considerations for licensors:
 wiki.creativecommons.org/Considerations_for_licensors
-
+```
+```
  Considerations for the public: By using one of our public
  licenses, a licensor grants the public permission to use the
  licensed material under specified terms and conditions. If
@@ -38,6 +39,7 @@ wiki.creativecommons.org/Considerations_for_licensors
  respect those requests where reasonable. More_considerations
  for the public: 
 wiki.creativecommons.org/Considerations_for_licensees
+```
 =======================================================================
 
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
@@ -77,7 +79,7 @@ n. You means the individual or entity exercising the Licensed Rights under this 
 Section 2 -- Scope.
 
 a. License grant.
-
+```
    1. Subject to the terms and conditions of this Public License,
       the Licensor hereby grants You a worldwide, royalty-free,
       non-sublicensable, non-exclusive, irrevocable license to
@@ -136,8 +138,9 @@ a. License grant.
       with, or sponsored, endorsed, or granted official status by,
       the Licensor or others designated to receive attribution as
       provided in Section 3(a)(1)(A)(i).
+```
 b. Other rights.
-
+```
    1. Moral rights, such as the right of integrity, are not
       licensed under this Public License, nor are publicity,
       privacy, and/or other similar personality rights; however, to
@@ -157,12 +160,13 @@ b. Other rights.
       reserves any right to collect such royalties, including when
       the Licensed Material is used other than for NonCommercial
       purposes.
+```
 Section 3 -- License Conditions.
 
 Your exercise of the Licensed Rights is expressly made subject to the following conditions.
 
 a. Attribution.
-
+```
    1. If You Share the Licensed Material (including in modified
       form), You must:
 
@@ -201,8 +205,9 @@ a. Attribution.
    3. If requested by the Licensor, You must remove any of the
       information required by Section 3(a)(1)(A) to the extent
       reasonably practicable.
+```
 b. ShareAlike.
-
+```
  In addition to the conditions in Section 3(a), if You Share
  Adapted Material You produce, the following conditions also apply.
 
@@ -219,6 +224,7 @@ b. ShareAlike.
       or conditions on, or apply any Effective Technological
       Measures to, Adapted Material that restrict exercise of the
       rights granted under the Adapter's License You apply.
+```
 Section 4 -- Sui Generis Database Rights.
 
 Where the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:
