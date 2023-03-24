@@ -32,6 +32,7 @@ async def process_coords_command(message: types.Message):
 
 @dp.message_handler(content_types=["location"])
 async def process_get_location(message: types.Message, state: FSMContext):
+    await state.finish()
     location = message.location
     async with state.proxy() as data:
         data['location'] = location
