@@ -1,4 +1,4 @@
-# astronomy_helper
+# astronomy_helper_bot
 
 Телеграм-бот для получения данных об азимуте и высоте планет Солнечной системы.
 Получение данных происходит с помощью JSON API https://github.com/csymlstd/visible-planets-api.
