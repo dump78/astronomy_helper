@@ -32,12 +32,15 @@ async def process_coords_command(message: types.Message):
 
 @dp.message_handler(content_types=["location"])
 async def process_get_location(message: types.Message, state: FSMContext):
-    await state.finish()
-    location = message.location
-    async with state.proxy() as data:
-        data['location'] = location
-    await message.answer(input_field_text, reply_markup=inline_kb)
-
+    if message.location is not None:
+        await state.finish()
+        location = message.location
+        async with state.proxy() as data:
+            data['location'] = location
+        await message.answer(input_field_text, reply_markup=inline_kb)
+    else:
+        await message.answer(MESSAGES['error_geo_message'])
+    
 
 @dp.callback_query_handler(lambda c: c.data)
 async def send_planet_coords(callback_query: types.CallbackQuery, state: FSMContext):
