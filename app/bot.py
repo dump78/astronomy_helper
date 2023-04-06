@@ -4,9 +4,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from app.keyboards import inline_kb, keyboard
 from app.dialogs import MESSAGES, input_field_text, text_get_coords, text_planet_data, planets_eng_rus
 from config import TOKEN, API_URL
+import aiohttp
 import logging
-import requests
-import json
 
 
 bot = Bot(token=TOKEN)
@@ -40,7 +39,7 @@ async def process_get_location(message: types.Message, state: FSMContext):
         await message.answer(input_field_text, reply_markup=inline_kb)
     else:
         await message.answer(MESSAGES['error_geo_message'])
-    
+
 
 @dp.callback_query_handler(lambda c: c.data)
 async def send_planet_coords(callback_query: types.CallbackQuery, state: FSMContext):
@@ -55,18 +54,19 @@ async def send_planet_coords(callback_query: types.CallbackQuery, state: FSMCont
         api_url = API_URL.format(latitude, longitude)
     else:
         await callback_query.message.answer(MESSAGES['error_geo_message'])
-    r = requests.get(url=api_url)
-    if r.status_code == 200:
-        data = json.loads(r.text)
-        planet_data = data['data'][planet_num]
-        right_ascension = planet_data['rightAscension']['raw']
-        declination = planet_data['declination']['raw']
-        if data is not None:
-            await callback_query.message.answer(text=text_planet_data.format(planet_name_rus, right_ascension, declination), reply_markup=inline_kb)
-        else:
-            await callback_query.message.answer(MESSAGES['error_find_data_message'])
-    else:
-        await callback_query.message.answer(MESSAGES['error_load_data_message'])
+    async with aiohttp.ClientSession() as session:
+        async with session.get(api_url) as response:
+            data = await response.json()
+            if response.status == 200:
+                planet_data = data['data'][planet_num]
+                right_ascension = planet_data['rightAscension']['raw']
+                declination = planet_data['declination']['raw']
+                if data is not None:
+                    await callback_query.message.answer(text=text_planet_data.format(planet_name_rus, right_ascension, declination), reply_markup=inline_kb)
+                else:
+                    await callback_query.message.answer(MESSAGES['error_find_data_message'])
+            else:
+                await callback_query.message.answer(MESSAGES['error_load_data_message'])
 
 
 @dp.message_handler()
