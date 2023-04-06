@@ -2,7 +2,7 @@ input_field_text = "Выберите планету:"
 placeholder = "Отправьте местоположение"
 text_get_coords = "Узнать координаты планеты"
 text_send_location = "Отправить местоположение"
-text_planet_data = "{0}: \n\nВысота: {1} \nАзимут: {2}"
+text_planet_data = "{0}: \n\nВысота: {1} h \nАзимут: {2}°"
 
 planets_eng_rus = {
     'Sun': ('Солнце', 0),
