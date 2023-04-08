@@ -11,7 +11,7 @@ import logging
 bot = Bot(token=TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 @dp.message_handler(commands=['start'])
@@ -31,14 +31,15 @@ async def process_coords_command(message: types.Message):
 
 @dp.message_handler(content_types=["location"])
 async def process_get_location(message: types.Message, state: FSMContext):
-    if message.location is not None:
+    try:
         await state.finish()
         location = message.location
         async with state.proxy() as data:
             data['location'] = location
         await message.answer(input_field_text, reply_markup=inline_kb)
-    else:
+    except Exception:
         await message.answer(MESSAGES['error_geo_message'])
+        raise
 
 
 @dp.callback_query_handler(lambda c: c.data)
@@ -47,13 +48,14 @@ async def send_planet_coords(callback_query: types.CallbackQuery, state: FSMCont
     planet_name_rus = planet_tuple[0]
     planet_num = planet_tuple[1]
     async with state.proxy() as data:
-        location = data['location']
-    if location is not None:
-        latitude = location.latitude
-        longitude = location.longitude
-        api_url = API_URL.format(latitude, longitude)
-    else:
-        await callback_query.message.answer(MESSAGES['error_geo_message'])
+        try:
+            location = data['location']
+            latitude = location.latitude
+            longitude = location.longitude
+            api_url = API_URL.format(latitude, longitude)
+        except Exception:
+            await callback_query.message.answer(MESSAGES['error_geo_message'])
+            raise
     async with aiohttp.ClientSession() as session:
         async with session.get(api_url) as response:
             data = await response.json()
